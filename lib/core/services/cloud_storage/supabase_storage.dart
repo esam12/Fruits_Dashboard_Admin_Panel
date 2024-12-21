@@ -8,6 +8,7 @@ class SupabaseStorageService implements CloudStorage {
   static late Supabase _supabase;
 
   static Future<void> initialize() async {
+    
     _supabase = await Supabase.initialize(
       url: KSupabaseUrl,
       anonKey: KSupabaseKey,
