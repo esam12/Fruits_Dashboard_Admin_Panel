@@ -8,7 +8,7 @@ class SupabaseStorageService implements CloudStorage {
   static late Supabase _supabase;
 
   static Future<void> initialize() async {
-    
+
     _supabase = await Supabase.initialize(
       url: KSupabaseUrl,
       anonKey: KSupabaseKey,
@@ -18,5 +18,6 @@ class SupabaseStorageService implements CloudStorage {
   @override
   Future<String> uploadFile(File file, String path) {
     throw UnimplementedError();
+    
   }
 }
