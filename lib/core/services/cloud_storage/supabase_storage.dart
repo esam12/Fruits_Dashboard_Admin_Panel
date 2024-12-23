@@ -15,6 +15,26 @@ class SupabaseStorageService implements CloudStorage {
     );
   }
 
+  static createBucket(String bucketName) async {
+    // Check if bucket exist
+    var buckets = await _supabase.client.storage.listBuckets();
+    
+    // flag
+    bool isBucketExist = false;
+
+    // if bucket exist return
+    for (var bucket in buckets) {
+      if (bucket.id == bucketName) {
+        isBucketExist = true;
+        break;
+      }
+    }
+    // if bucket not exist create
+    if (!isBucketExist) {
+      await _supabase.client.storage.createBucket(bucketName);
+    }
+  }
+
   @override
   Future<String> uploadFile(File file, String path) async {
     String fileName = p.basename(file.path);

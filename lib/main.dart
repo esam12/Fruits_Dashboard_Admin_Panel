@@ -15,6 +15,9 @@ void main() async {
   // Initialize Supabase
   await SupabaseStorageService.initialize();
 
+  // Initialize Bucket
+  await SupabaseStorageService.createBucket('fruits_images');
+
   // Bloc Observer
   Bloc.observer = CustomBlocObserver();
 
