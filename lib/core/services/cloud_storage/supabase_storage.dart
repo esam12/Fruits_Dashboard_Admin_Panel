@@ -18,7 +18,7 @@ class SupabaseStorageService implements CloudStorage {
   static createBucket(String bucketName) async {
     // Check if bucket exist
     var buckets = await _supabase.client.storage.listBuckets();
-    
+
     // flag
     bool isBucketExist = false;
 
@@ -42,6 +42,11 @@ class SupabaseStorageService implements CloudStorage {
     var result = await _supabase.client.storage
         .from('fruits_images')
         .upload('$path/$fileName.$extensionName', file);
+
+    final String publicUrl = _supabase.client.storage
+        .from('fruits_images')
+        .getPublicUrl('$path/$fileName.$extensionName');
+    print(publicUrl);
 
     return result;
   }
