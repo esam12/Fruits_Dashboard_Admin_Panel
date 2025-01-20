@@ -3,6 +3,7 @@ import 'package:fruits_hub_admin/features/orders/presentation/widgets/orders_vie
 
 class OrdersView extends StatelessWidget {
   const OrdersView({super.key});
+  static const String routeName = 'orders';
 
   @override
   Widget build(BuildContext context) {
