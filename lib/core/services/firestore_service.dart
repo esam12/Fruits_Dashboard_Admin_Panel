@@ -8,26 +8,45 @@ class FireStoreService implements DatabaseService {
   Future<void> addData({
     required String path,
     required Map<String, dynamic> data,
-    String? documentId,
+    String? docuementId,
   }) async {
-    if (documentId != null) {
-      await firestore.collection(path).doc(documentId).set(data);
+    if (docuementId != null) {
+      await firestore.collection(path).doc(docuementId).set(data);
     } else {
       await firestore.collection(path).add(data);
     }
   }
 
-  @override
-  Future<Map<String, dynamic>> getData(
-      {required String path, required String docuementId}) async {
-    var data = await firestore.collection(path).doc(docuementId).get();
-    return data.data() as Map<String, dynamic>;
-  }
 
+
+  
   @override
-  Future<bool> checkIfDataExists(
-      {required String path, required String docuementId}) async {
+  Future<bool> checkIfDataExists({required String path, required String docuementId}) async {
     var data = await firestore.collection(path).doc(docuementId).get();
     return data.exists;
   }
+  @override
+  Future<dynamic> getData({required String path, String? docuementId, Map<String, dynamic>? query}) async {
+    if (docuementId != null) {
+      var data = await firestore.collection(path).doc(docuementId).get();
+      return data.data() as Map<String, dynamic>;
+    } else {
+      Query<Map<String, dynamic>> data = firestore.collection(path);
+      if (query != null) {
+        if (query['orderBy'] != null) {
+          var orderByField = query['orderBy'];
+          var descending = query['descending'];
+          data = data.orderBy(orderByField, descending: descending);
+        }
+        if (query['limit'] != null) {
+          var limit = query['limit'];
+          data = data.limit(limit);
+        }
+      }
+      var result = await data.get();
+
+      return  result.docs.map((e) => e.data()).toList();
+    }
+  }
+ 
 }
