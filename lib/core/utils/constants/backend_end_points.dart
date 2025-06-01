@@ -3,4 +3,5 @@ class BackendEndPoints {
   static const String products = 'products';
 
   static const String getOrders = 'orders';
+  static const String updateOrder = 'orders';
 }
