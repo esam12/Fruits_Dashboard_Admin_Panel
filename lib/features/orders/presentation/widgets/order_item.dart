@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fruits_hub_admin/core/enums/order_enum.dart';
 import 'package:fruits_hub_admin/features/orders/domain/entities/order_entity.dart';
+import 'package:fruits_hub_admin/features/orders/presentation/widgets/order_action_button.dart';
 
 class OrderItemWidget extends StatelessWidget {
   final OrderEntity orderModel;
@@ -109,6 +110,9 @@ class OrderItemWidget extends StatelessWidget {
                 );
               },
             ),
+
+            const SizedBox(height: 8),
+            OrderActionButton(orderModel: orderModel),
           ],
         ),
       ),
