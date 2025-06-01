@@ -17,16 +17,18 @@ class FireStoreService implements DatabaseService {
     }
   }
 
-
-
-  
   @override
-  Future<bool> checkIfDataExists({required String path, required String docuementId}) async {
+  Future<bool> checkIfDataExists(
+      {required String path, required String docuementId}) async {
     var data = await firestore.collection(path).doc(docuementId).get();
     return data.exists;
   }
+
   @override
-  Future<dynamic> getData({required String path, String? docuementId, Map<String, dynamic>? query}) async {
+  Future<dynamic> getData(
+      {required String path,
+      String? docuementId,
+      Map<String, dynamic>? query}) async {
     if (docuementId != null) {
       var data = await firestore.collection(path).doc(docuementId).get();
       return data.data() as Map<String, dynamic>;
@@ -45,8 +47,36 @@ class FireStoreService implements DatabaseService {
       }
       var result = await data.get();
 
-      return  result.docs.map((e) => e.data()).toList();
+      return result.docs.map((e) => e.data()).toList();
     }
   }
- 
+
+  @override
+  Stream streamData(
+      {required String path, Map<String, dynamic>? query}) async* {
+    Query<Map<String, dynamic>> data = firestore.collection(path);
+    if (query != null) {
+      if (query['orderBy'] != null) {
+        var orderByField = query['orderBy'];
+        var descending = query['descending'];
+        data = data.orderBy(orderByField, descending: descending);
+      }
+      if (query['limit'] != null) {
+        var limit = query['limit'];
+        data = data.limit(limit);
+      }
+    }
+    await for (var snapshot in data.snapshots()) {
+      yield snapshot.docs.map((e) => e.data()).toList();
+    }
+  }
+
+  @override
+  Future<void> updateData({
+    required String path,
+    required String docuementId,
+    required Map<String, dynamic> data,
+  }) async {
+    await firestore.collection(path).doc(docuementId).update(data);
+  }
 }
