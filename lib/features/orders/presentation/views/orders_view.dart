@@ -4,7 +4,9 @@ import 'package:fruits_hub_admin/core/helper_functions/get_order_dummy_data.dart
 import 'package:fruits_hub_admin/core/services/get_it_service.dart';
 import 'package:fruits_hub_admin/features/orders/domain/repos/orders_repo.dart';
 import 'package:fruits_hub_admin/features/orders/presentation/manager/fetch_orders/fetch_orders_cubit.dart';
+import 'package:fruits_hub_admin/features/orders/presentation/manager/update_order/update_order_cubit.dart';
 import 'package:fruits_hub_admin/features/orders/presentation/widgets/orders_view_body.dart';
+import 'package:fruits_hub_admin/features/orders/presentation/widgets/update_order_builder_widget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class OrdersView extends StatelessWidget {
@@ -13,12 +15,28 @@ class OrdersView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => FetchOrdersCubit(
-        getIt.get<OrdersRepo>(),
-      ),
-      child: const Scaffold(
-        body: OrdersViewBodyBuilder(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => FetchOrdersCubit(
+            getIt.get<OrdersRepo>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => UpdateOrderCubit(
+            getIt.get<OrdersRepo>(),
+          ),
+        ),
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Orders'),
+          centerTitle: true,
+          elevation: 1,
+        ),
+        body: const UpdateOrderBuilderWidget(
+          child: OrdersViewBodyBuilder(),
+        ),
       ),
     );
   }
@@ -34,13 +52,11 @@ class OrdersViewBodyBuilder extends StatefulWidget {
 }
 
 class _OrdersViewBodyBuilderState extends State<OrdersViewBodyBuilder> {
-
   @override
   void initState() {
     super.initState();
     context.read<FetchOrdersCubit>().fetchOrders();
   }
-
 
   @override
   Widget build(BuildContext context) {
