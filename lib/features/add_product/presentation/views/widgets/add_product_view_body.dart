@@ -110,6 +110,7 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                         ProductEntity input = ProductEntity(
+                          id: '',
                           name: name,
                           code: code,
                           description: description,
