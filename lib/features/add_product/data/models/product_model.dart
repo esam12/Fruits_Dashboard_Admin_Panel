@@ -4,6 +4,7 @@ import 'package:fruits_hub_admin/features/add_product/data/models/review_model.d
 import 'package:fruits_hub_admin/features/add_product/domain/entities/product_entity.dart';
 
 class ProductModel {
+  final String id;
   final String name;
   final num price;
   final String code;
@@ -21,6 +22,7 @@ class ProductModel {
   final List<ReviewModel> reviews;
 
   ProductModel({
+    required this.id,
     required this.name,
     required this.price,
     required this.code,
@@ -40,6 +42,7 @@ class ProductModel {
 
   factory ProductModel.fromEntity(ProductEntity addProductInputEntity) {
     return ProductModel(
+      id: addProductInputEntity.id,
       name: addProductInputEntity.name,
       price: addProductInputEntity.price,
       code: addProductInputEntity.code,
@@ -59,6 +62,7 @@ class ProductModel {
 
   toJson() {
     return {
+      'id': id,
       'name': name,
       'price': price,
       'code': code,
