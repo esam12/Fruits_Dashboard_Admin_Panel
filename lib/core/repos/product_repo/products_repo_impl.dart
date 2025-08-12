@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fruits_hub_admin/core/errors/failures.dart';
 import 'package:fruits_hub_admin/core/repos/product_repo/products_repo.dart';
@@ -14,9 +15,16 @@ class ProductsRepoImpl implements ProductsRepo {
   Future<Either<Failure, void>> addProduct(
       ProductEntity addProductInputEntity) async {
     try {
+      final docRef = FirebaseFirestore.instance
+          .collection(BackendEndPoints.products)
+          .doc();
+      final docId = docRef.id;
+      addProductInputEntity.id = docId;
       await databaseService.addData(
           path: BackendEndPoints.products,
+          docuementId: docId,
           data: ProductModel.fromEntity(addProductInputEntity).toJson());
+
       return const Right(null);
     } catch (e) {
       return Left(ServerFailure('Failed to add product'));
