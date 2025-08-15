@@ -6,6 +6,8 @@ import 'package:fruits_hub_admin/core/services/cloud_storage/cloud_storage.dart'
 import 'package:fruits_hub_admin/core/services/cloud_storage/supabase_storage.dart';
 import 'package:fruits_hub_admin/core/services/data_service.dart';
 import 'package:fruits_hub_admin/core/services/firestore_service.dart';
+import 'package:fruits_hub_admin/features/notification/data/repos/notification_repository_impl.dart';
+import 'package:fruits_hub_admin/features/notification/domain/repos/notification_repository.dart';
 import 'package:fruits_hub_admin/features/orders/data/repos/orders_repo_impl.dart';
 import 'package:fruits_hub_admin/features/orders/domain/repos/orders_repo.dart';
 import 'package:get_it/get_it.dart';
@@ -29,4 +31,7 @@ void setupGetIt() {
 
   getIt.registerSingleton<OrdersRepo>(
       OrdersRepoImpl(databaseService: getIt.get<DatabaseService>()));
+
+  getIt.registerSingleton<NotificationRepository>(
+      NotificationRepositoryImpl(getIt.get<DatabaseService>()));
 }
