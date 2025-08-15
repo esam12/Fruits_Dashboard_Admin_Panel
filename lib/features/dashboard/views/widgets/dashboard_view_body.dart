@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fruits_hub_admin/core/utils/constants/sizes.dart';
 import 'package:fruits_hub_admin/core/widgets/custom_button.dart';
 import 'package:fruits_hub_admin/features/add_product/presentation/views/add_product_view.dart';
+import 'package:fruits_hub_admin/features/notification/presentation/views/notification_view.dart';
 import 'package:fruits_hub_admin/features/orders/presentation/views/orders_view.dart';
 
 class DashboardViewBody extends StatelessWidget {
@@ -26,6 +27,13 @@ class DashboardViewBody extends StatelessWidget {
               Navigator.pushNamed(context, OrdersView.routeName);
             },
             text: 'View Orders',
+          ),
+          const SizedBox(height: Sizes.md),
+          CustomButton(
+            onPressed: () {
+              Navigator.pushNamed(context, NotificationView.routeName);
+            },
+            text: 'Send Notification',
           ),
         ],
       ),
