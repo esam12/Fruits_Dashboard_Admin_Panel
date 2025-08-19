@@ -6,4 +6,6 @@ class BackendEndPoints {
   static const String updateOrder = 'orders';
 
   static const String notifications = 'notifications';
+
+  static const String users = 'users';
 }
