@@ -1,1 +1,38 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"fruits-hub-app","appId":"1:388077329229:android:63bf3510d66275a3d37504","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"fruits-hub-app","configurations":{"android":"1:388077329229:android:63bf3510d66275a3d37504","ios":"1:388077329229:ios:ea61224796921998d37504"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "fruits-hub-app",
+          "appId": "1:388077329229:android:63bf3510d66275a3d37504",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "fruits-hub-app",
+          "configurations": {
+            "android": "1:388077329229:android:63bf3510d66275a3d37504",
+            "ios": "1:388077329229:ios:ea61224796921998d37504"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ]
+}
